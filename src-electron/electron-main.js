@@ -23,6 +23,8 @@ function createWindow () {
     }
   })
 
+	mainWindow.menuBarVisible = false
+
   mainWindow.loadURL(process.env.APP_URL)
 
   if (process.env.DEBUGGING) {
