@@ -1,39 +1,33 @@
 <template>
-	<q-page class="flex flex-center">
-		<q-stepper
-			v-model="step"
-			ref="stepper"
-			color="primary"
-			animated
-		>
-			<q-step
-				:name="1"
-				title="Выбрать файл"
-				icon="add"
-				:done="step > 1"
-			>
-				For each ad campaign that you create, you can control how much you're willing to spend on clicks and conversions, which networks and geographical locations you want your ads to show on, and more.
-			</q-step>
-			<q-step
-				:name="2"
-				title="Данные"
-				icon="table_chart"
-				:done="step > 2"
-			>
-				An ad group contains one or more ads which target a shared set of keywords.
-			</q-step>
-			<template v-slot:navigation>
-				<q-stepper-navigation>
-					<q-btn @click="$refs.stepper.next()" color="primary" :label="step === 2 ? 'Выбрать файл' : 'Получить данные'" />
-					<q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
-				</q-stepper-navigation>
-			</template>
-		</q-stepper>
+	<q-page class="q-pa-md q-gutter-y-lg">
+		<div class="row q-gutter-x-md">
+			<div class="col">
+				<q-file v-model="file" @update:model-value="getFile" clearable label="Выбрать файл" outlined>
+					<template #prepend>
+						<q-icon name="attach_file" />
+					</template>
+				</q-file>
+			</div>
+			<div class="col-auto">
+				<q-btn color="primary" unelevated label="получить данные" :disable="file === null ? true : false" @click="getData" />
+			</div>
+		</div>
 	</q-page>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-let step = ref()
+let file = ref(null)
+let pathToFile
+
+const getFile = () => {
+	if (file.value !== null) {
+		pathToFile = file.value.path
+	}
+}
+
+const getData = () => {
+
+}
 </script>
