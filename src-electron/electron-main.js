@@ -1,6 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import os from 'os'
+import { MainWindow } from './core/helpers'
+import FileReader from './core/FileReader'
+
+new FileReader
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform()
@@ -40,6 +44,8 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+	new MainWindow().setWindow(mainWindow)
 }
 
 app.whenReady().then(createWindow)

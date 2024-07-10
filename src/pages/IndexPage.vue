@@ -12,14 +12,24 @@
 				<q-btn color="primary" unelevated label="получить данные" :disable="file === null ? true : false" @click="getData" />
 			</div>
 		</div>
+		<q-inner-loading :showing="visibleLoading">
+      <q-spinner-gears size="50px" color="primary" />
+    </q-inner-loading>
 	</q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 let file = ref(null)
 let pathToFile
+let visibleLoading = ref(false)
+
+onMounted(() => {
+	window.api.on('file-has-been-read', () => {
+		visibleLoading.value = false
+	})
+})
 
 const getFile = () => {
 	if (file.value !== null) {
@@ -28,6 +38,7 @@ const getFile = () => {
 }
 
 const getData = () => {
-
+	window.api.invoke('read-file', pathToFile)
+	visibleLoading.value = true
 }
 </script>
